@@ -62,10 +62,47 @@ func Some[T comparable](arr []T, callback func(T) bool) bool {
 	return false
 }
 
-func FlatMap[T, RETURN any](arr []T, callback func(T) []RETURN) []RETURN {
-	var r []RETURN
+func ForEach[T any](arr []T, callback func(T)) {
 	for _, v := range arr {
-		r = append(r, callback(v)...)
+		callback(v)
+	}
+}
+
+func Pop[T any](arr []T) (T, []T) {
+	return arr[len(arr)-1], arr[:len(arr)-1]
+}
+
+func Shift[T any](arr []T) (T, []T) {
+	return arr[0], arr[1:]
+}
+
+func Unshift[T any](arr []T, v T) []T {
+	return append([]T{v}, arr...)
+}
+
+func Join[T any](arr []T, sep string) string {
+	var r string
+	for i := range arr {
+		if i > 0 {
+			r += sep
+		}
 	}
 	return r
+}
+
+func Concat[T any](arr ...[]T) []T {
+	var r []T
+	for _, v := range arr {
+		r = append(r, v...)
+	}
+	return r
+}
+
+func Includes[T comparable](arr []T, v T) bool {
+	for _, vv := range arr {
+		if vv == v {
+			return true
+		}
+	}
+	return false
 }
