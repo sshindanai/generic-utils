@@ -9,11 +9,10 @@ func Map[T, RETURN any](arr []T, callback func(T) RETURN) []RETURN {
 }
 
 func Reduce[T, RETURN any](arr []T, callback func(RETURN, T) RETURN, init RETURN) RETURN {
-	var r RETURN
 	for _, v := range arr {
-		r = callback(r, v)
+		init = callback(init, v)
 	}
-	return r
+	return init
 }
 
 func Filter[T comparable](arr []T, callback func(T) bool) []T {
